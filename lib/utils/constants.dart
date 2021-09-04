@@ -5,4 +5,4 @@ const BUTTERS = "Butters";
 const MINE = "Mine";
 const PROFILE = "Profile";
 
-const IMAGE_URL = "localhost:3000/api/images";
+const IMAGE_URL = "http://192.168.0.101:3000/api/images";

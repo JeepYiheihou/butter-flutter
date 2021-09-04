@@ -1,4 +1,4 @@
-import 'package:butter/configs/constants.dart';
+import 'package:butter/utils/constants.dart';
 import 'package:butter/pages/main_page/mine.dart';
 import 'package:butter/pages/main_page/profile.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'butters.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
