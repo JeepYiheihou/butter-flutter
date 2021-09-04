@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:butter/models/butter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -7,13 +5,18 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'components/butter_tile_view.dart';
 
 class ButtersPage extends StatefulWidget {
-  const ButtersPage({Key? key}) : super(key: key);
+
+  final ScrollController scrollController;
+  ButtersPage(this.scrollController);
 
   @override
-  _ButtersPageState createState() => _ButtersPageState();
+  _ButtersPageState createState() => _ButtersPageState(scrollController);
 }
 
 class _ButtersPageState extends State<ButtersPage> {
+
+  final ScrollController scrollController;
+  _ButtersPageState(this.scrollController);
 
   List<Butter> butters = [
     Butter(1, 2, "cute1", "1.jpeg", 225, 225),
@@ -35,6 +38,7 @@ class _ButtersPageState extends State<ButtersPage> {
     return Container(
       color: Color.fromARGB(255, 230, 230, 230),
       child: StaggeredGridView.countBuilder(
+        controller: scrollController,
         crossAxisCount: 2,
         itemCount: butters.length,
         itemBuilder: (BuildContext context, int index) {
@@ -48,7 +52,6 @@ class _ButtersPageState extends State<ButtersPage> {
           double height = 1.0 * currButter.thumbWidth / currButter.thumbHeight;
           return StaggeredTile.count(1, height + 0.3);
         },
-        //mainAxisSpacing: 2,
         crossAxisSpacing: 5,
       )
     );
