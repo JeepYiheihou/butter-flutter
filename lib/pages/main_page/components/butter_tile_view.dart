@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:butter/pages/single_butter_page/single_butter_page.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:butter/models/butter.dart';

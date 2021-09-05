@@ -46,8 +46,12 @@ class _MainPageState extends State<MainPage> {
           generateNavBarItem(Icon(Icons.person), PROFILE),
         ],
         onTap: (int index) {
-          ScrollController scrollController = scrollControllers[index];
-          scrollToTop(scrollController);
+
+          // Current bottom bar works as scroller trigger to top.
+          if (index == _currentIndex) {
+            ScrollController scrollController = scrollControllers[index];
+            scrollToTop(scrollController);
+          }
           setState(() {
             _currentIndex = index;
           });

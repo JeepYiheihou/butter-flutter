@@ -1,4 +1,5 @@
 import 'package:butter/models/butter.dart';
+import 'package:butter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -36,7 +37,7 @@ class _MinePageState extends State<MinePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 230, 230, 230),
+      color: BACKGROUND_GREY_COLOR,
       child: StaggeredGridView.countBuilder(
         controller: scrollController,
         crossAxisCount: 2,
