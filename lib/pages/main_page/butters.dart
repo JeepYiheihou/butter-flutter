@@ -25,7 +25,7 @@ class _ButtersPageState extends State<ButtersPage> {
   @override
   void initState() {
     super.initState();
-    String url = BUTTERS_URL;
+    String url = ButterHttpUtils.generateButtersUrl("all");
     ButterHttpUtils.request(url).then((res) {
       final data = res.data;
       List<Butter> buttersUpdated = [];

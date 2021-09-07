@@ -1,5 +1,6 @@
 import 'package:butter/models/butter.dart';
 import 'package:butter/utils/constants.dart';
+import 'package:butter/utils/network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -16,11 +17,26 @@ class MinePage extends StatefulWidget {
 
 class _MinePageState extends State<MinePage> {
 
+  List<Butter> butters= [];
+
   final ScrollController scrollController;
   _MinePageState(this.scrollController);
 
-  List<Butter> butters = [
-  ];
+  @override
+  void initState() {
+    super.initState();
+    String url = ButterHttpUtils.generateButtersUrl("1");
+    ButterHttpUtils.request(url).then((res) {
+      final data = res.data;
+      List<Butter> buttersUpdated = [];
+      for (var map in data) {
+        buttersUpdated.add(Butter.fromMap(map));
+      }
+      setState(() {
+        butters = buttersUpdated;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +54,8 @@ class _MinePageState extends State<MinePage> {
         },
         staggeredTileBuilder: (int index) {
           var currButter = butters[index];
-          double thumbWidth = 1;
-          double thumbHeight = 1;
-          double height = 1.0 * thumbWidth / thumbHeight;
+          var mediaItem = currButter.mediaItems[0];
+          double height = 1.0 * mediaItem.displayHeight / mediaItem.displayWidth;
           return StaggeredTile.count(1, height + 0.3);
         },
         crossAxisSpacing: 5,

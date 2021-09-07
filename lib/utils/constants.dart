@@ -7,7 +7,7 @@ const String BUTTERS = "Butters";
 const String MINE = "Mine";
 const String PROFILE = "Profile";
 
-const String BUTTERS_URL = "http://192.168.0.101:3000/api/butters/all";
+const String BUTTERS_URL = "http://192.168.0.101:3000/api/butters/";
 const String IMAGE_URL = "http://192.168.0.101:3000/api/files";
 const String USER_URL = "http://192.168.0.101:3000/api/users";
 const String AVATAR_URL = "http://192.168.0.101:3000/api/avatars";

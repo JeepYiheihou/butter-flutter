@@ -9,6 +9,10 @@ class ButterHttpUtils {
   );
   static final dio = Dio(baseOptions);
 
+  static String generateButtersUrl(String url) {
+    return p.join(BUTTERS_URL, url);
+  }
+
   static String generateMediaItemUrl(String url) {
     return p.join(IMAGE_URL, url);
   }

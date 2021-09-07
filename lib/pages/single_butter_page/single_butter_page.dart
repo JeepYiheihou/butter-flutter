@@ -73,6 +73,7 @@ class _SingleButterPageState extends State<SingleButterPage> {
               pagination: SwiperPagination(
                 builder: DotSwiperPaginationBuilder(
                   color: BACKGROUND_GREY_COLOR,
+                  size: 5
                 )
               ),
             ),
@@ -85,12 +86,11 @@ class _SingleButterPageState extends State<SingleButterPage> {
                 Container(
                   width: double.infinity,
                   child: ElevatedButton(
-                    child: Text("MAKE A BUTTER!"),
+                    child: Text("MAKE A BUTTER"),
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
                         onPrimary: Colors.white,
                         textStyle: TextStyle(
-                          fontSize: 20,
                           fontFamily: MAIN_FONT_FAMILY,
                         )
                     ),
