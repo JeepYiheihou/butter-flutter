@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:butter/pages/main_page/main_page.dart';
+import 'package:butter/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -48,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 UserNameTextField(updateUserName),
                 SizedBox(height: 7),
                 PasswordTextField(updatePassword),
+                SizedBox(height: 7),
                 LoginButton(login),
               ],
             ),
@@ -114,8 +116,16 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 50,
       child: ElevatedButton(
         child: Text("Login"),
+        style: ElevatedButton.styleFrom(
+          onPrimary: Colors.white,
+          textStyle: TextStyle(
+            fontSize: 20,
+            fontFamily: MAIN_FONT_FAMILY,
+          )
+        ),
         onPressed: () {
           login();
         },

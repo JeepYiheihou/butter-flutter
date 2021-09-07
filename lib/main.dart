@@ -1,5 +1,6 @@
 import 'package:butter/pages/login_page/login_page.dart';
 import 'package:butter/pages/main_page/main_page.dart';
+import 'package:butter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ class MainApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
+        fontFamily: MAIN_FONT_FAMILY,
       ),
       home: MainContainer(),
     );

@@ -19,54 +19,33 @@ class _ProfilePageState extends State<ProfilePage> {
       color: Colors.grey,
       child: ListView(
         controller: scrollController,
-        children: [
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-          Text("user name"),
-          Text("email"),
-          Text("settings"),
-        ],
+
+        children: ListTile.divideTiles(
+          context: context,
+          tiles: [
+            ProfileItem("Name"),
+            ProfileItem("Email"),
+            ProfileItem("Notifications"),
+            ProfileItem("About"),
+            ProfileItem("Logout"),
+          ]
+        ).toList(),
       ),
+    );
+  }
+}
+
+class ProfileItem extends StatelessWidget {
+  final String entryText;
+
+  ProfileItem(this.entryText);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15),
+      color: Colors.white,
+      child: Text(entryText),
     );
   }
 }
