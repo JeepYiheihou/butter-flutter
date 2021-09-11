@@ -1,8 +1,9 @@
 import 'package:butter/pages/login_page/login_page.dart';
-import 'package:butter/pages/main_page/main_page.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'common/global.dart';
 
 
 void main() {
@@ -11,7 +12,9 @@ void main() {
     statusBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,
   ));
-  runApp(MainApp());
+  Global.init().then((e) {
+    runApp(MainApp());
+  });
 }
 
 class MainApp extends StatelessWidget {
@@ -26,6 +29,7 @@ class MainApp extends StatelessWidget {
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         fontFamily: MAIN_FONT_FAMILY,
+        backgroundColor: Colors.white,
       ),
       home: MainContainer(),
     );
@@ -33,7 +37,6 @@ class MainApp extends StatelessWidget {
 }
 
 class MainContainer extends StatefulWidget {
-  MainContainer({Key? key}) : super(key: key);
 
   @override
   _MainContainerState createState() => _MainContainerState();

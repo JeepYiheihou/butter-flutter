@@ -1,17 +1,26 @@
+import 'package:butter/common/global.dart';
+import 'package:butter/models/user.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
   final ScrollController scrollController;
-  ProfilePage(this.scrollController);
+  ProfilePage(
+    this.scrollController,
+  );
 
   @override
-  _ProfilePageState createState() => _ProfilePageState(scrollController);
+  _ProfilePageState createState() {
+    return _ProfilePageState(scrollController);
+  }
 }
 
 class _ProfilePageState extends State<ProfilePage> {
 
   final ScrollController scrollController;
-  _ProfilePageState(this.scrollController);
+  final User? user = Global.user;
+  _ProfilePageState(
+    this.scrollController,
+  );
 
   @override
   Widget build(BuildContext context) {

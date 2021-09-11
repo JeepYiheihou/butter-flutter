@@ -7,8 +7,12 @@ import 'package:flutter/material.dart';
 
 class ButterTileView extends StatelessWidget {
   final Butter butter;
+  final User? user;
 
-  ButterTileView(this.butter);
+  ButterTileView(
+    this.butter,
+    this.user,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,9 @@ class ButterTileView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context, 
-          MaterialPageRoute(builder: (context) => SingleButterPage(butter)),
+          MaterialPageRoute(builder: (context) {
+            return SingleButterPage(butter, user);
+          })
         );
       },
       child: ClipRRect(

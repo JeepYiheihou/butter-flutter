@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:butter/common/global.dart';
+import 'package:butter/models/user.dart';
 import 'package:butter/pages/main_page/main_page.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,16 @@ class _LoginPageState extends State<LoginPage> {
 
   void login() {
     log("Trying to login with user name $userName and password $password");
+    // Mock update global variable
+    Global.user = User(
+      2,
+      "bulubuluman",
+      "mail.gmail.com",
+      "Vancouver",
+      "male",
+      "1.jpeg",
+      ["goga", "happiness"],
+    );
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainPage())
@@ -72,7 +84,7 @@ class UserNameTextField extends StatelessWidget {
           labelText: "User name",
           border: OutlineInputBorder(
               borderSide: BorderSide(
-                  width: 1
+                  width: 10
               )
           )
       ),
@@ -97,7 +109,7 @@ class PasswordTextField extends StatelessWidget {
         labelText: "Password",
         border: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1
+            width: 10
           )
         )
       ),

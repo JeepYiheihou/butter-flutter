@@ -1,8 +1,9 @@
+import 'package:butter/common/global.dart';
+import 'package:butter/models/user.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:butter/pages/main_page/mine.dart';
 import 'package:butter/pages/main_page/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 import 'butters.dart';
 
@@ -14,6 +15,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
+  User? user;
   ScrollController buttersPageScrollController = ScrollController();
   ScrollController minePageScrollController = ScrollController();
   ScrollController profilePageScrollController = ScrollController();
@@ -36,6 +38,10 @@ class _MainPageState extends State<MainPage> {
       minePageScrollController,
       profilePageScrollController,
     ];
+
+    setState(() {
+      user = Global.user;
+    });
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -60,9 +66,15 @@ class _MainPageState extends State<MainPage> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          ButtersPage(buttersPageScrollController),
-          MinePage(minePageScrollController),
-          ProfilePage(profilePageScrollController),
+          ButtersPage(
+            buttersPageScrollController,
+          ),
+          MinePage(
+            minePageScrollController,
+          ),
+          ProfilePage(
+            profilePageScrollController,
+          ),
         ],
       ),
     );

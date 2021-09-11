@@ -1,4 +1,6 @@
+import 'package:butter/common/global.dart';
 import 'package:butter/models/butter.dart';
+import 'package:butter/models/user.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:butter/utils/network.dart';
 import 'package:flutter/material.dart';
@@ -9,23 +11,30 @@ import 'components/butter_tile_view.dart';
 class ButtersPage extends StatefulWidget {
 
   final ScrollController scrollController;
-  ButtersPage(this.scrollController);
+  ButtersPage(
+    this.scrollController,
+  );
 
   @override
-  _ButtersPageState createState() => _ButtersPageState(scrollController);
+  _ButtersPageState createState() {
+    return _ButtersPageState(scrollController);
+  }
 }
 
 class _ButtersPageState extends State<ButtersPage> {
   List<Butter> butters = [];
 
   final ScrollController scrollController;
-  _ButtersPageState(this.scrollController);
+  final User? user = Global.user;
+  _ButtersPageState(
+    this.scrollController,
+  );
 
 
   @override
   void initState() {
     super.initState();
-    String url = ButterHttpUtils.generateButtersUrl("all");
+    String url = ButterHttpUtils.generateButtersByAllUrl("");
     ButterHttpUtils.request(url).then((res) {
       final data = res.data;
       List<Butter> buttersUpdated = [];
@@ -49,7 +58,7 @@ class _ButtersPageState extends State<ButtersPage> {
         itemBuilder: (BuildContext context, int index) {
           return Container(
             padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-            child: ButterTileView(butters[index])
+            child: ButterTileView(butters[index], user)
           );
         },
         staggeredTileBuilder: (int index) {
