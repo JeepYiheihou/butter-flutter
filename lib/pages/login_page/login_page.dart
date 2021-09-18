@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     log("Trying to login with user name $userName and password $password");
     // Mock update global variable
     Global.user = User(
-      2,
+      1,
       "bulubuluman",
       "mail.gmail.com",
       "Vancouver",

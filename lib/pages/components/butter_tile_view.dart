@@ -81,7 +81,7 @@ class _DetailsTileViewState extends State<DetailsTileView> {
   @override
   void initState() {
     super.initState();
-    String url = ButterHttpUtils.generateUserUrl(butter.ownerId.toString());
+    String url = ButterHttpUtils.generateUserUrl(butter.userId.toString());
     ButterHttpUtils.request(url).then((res) {
       setState(() {
         user = User.fromMap(res.data);
@@ -102,7 +102,7 @@ class _DetailsTileViewState extends State<DetailsTileView> {
                     butter.title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        fontSize: 20
+                        fontSize: 15
                     )
                 ),
                 UserNameWithSmallAvatar(user),
@@ -129,7 +129,12 @@ class UserNameWithSmallAvatar extends StatelessWidget {
           borderRadius: BorderRadius.circular(7.5),
           child: Image.network(url, height: 15, width: 15),
         ),
-        Text(user!.name),
+        Text(
+          user!.name,
+          style: TextStyle(
+            fontSize: 10,
+          ),
+        ),
       ];
 
     }

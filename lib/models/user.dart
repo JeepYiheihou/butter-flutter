@@ -19,8 +19,10 @@ class User {
 
   static fromMap(map) {
     List<String> wishList = [];
-    for (var wish in map["wishList"]) {
-      wishList.add(wish);
+    if (map["wishList"] != null) {
+      for (var wish in map["wishList"]) {
+        wishList.add(wish);
+      }
     }
 
     return User(

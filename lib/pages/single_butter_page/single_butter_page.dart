@@ -40,7 +40,7 @@ class _SingleButterPageState extends State<SingleButterPage> {
     super.initState();
 
     // Initiate owner data
-    String butterOwnerUrl = ButterHttpUtils.generateUserUrl(butter.ownerId.toString());
+    String butterOwnerUrl = ButterHttpUtils.generateUserUrl(butter.userId.toString());
     ButterHttpUtils.request(butterOwnerUrl).then((res) {
       setState(() {
         butterOwner = User.fromMap(res.data);
@@ -78,7 +78,7 @@ class _SingleButterPageState extends State<SingleButterPage> {
     // If this butter belongs to myself, then don't display the
     // butter button.
     List<Widget> buttonsList = [SingleButterViewButtonsSet()];
-    if (user != null && user!.userId == butter.ownerId) {
+    if (user != null && user!.userId == butter.userId) {
       buttonsList.add(Divider());
     } else {
       buttonsList.add(
@@ -280,7 +280,7 @@ class _CommentUnitViewState extends State<CommentUnitView> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime dt = DateTime.fromMicrosecondsSinceEpoch(comment.timestamp);
+    DateTime dt = DateTime.fromMicrosecondsSinceEpoch(comment.creationTimestamp);
     var commentTime = DateFormat("yyyy-MM-dd - kk:mm").format(dt);
     String avatarUrl = ButterHttpUtils.generateAvatarByUserIdUrl(comment.posterUserId.toString());
 
@@ -312,7 +312,7 @@ class _CommentUnitViewState extends State<CommentUnitView> {
               fontSize: 10
             ),
           ),
-          Text(comment.content),
+          Text(comment.contentText),
           SizedBox(height: 5),
         ],
       ),

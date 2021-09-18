@@ -1,11 +1,12 @@
 import 'package:butter/common/global.dart';
 import 'package:butter/models/user.dart';
+import 'package:butter/pages/main_page/sub_pages/add_butter_page.dart';
 import 'package:butter/utils/constants.dart';
-import 'package:butter/pages/main_page/mine.dart';
-import 'package:butter/pages/main_page/profile.dart';
+import 'package:butter/pages/main_page/sub_pages/mine_page.dart';
+import 'package:butter/pages/main_page/sub_pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
-import 'butters.dart';
+import 'sub_pages/butters_page.dart';
 
 class MainPage extends StatefulWidget {
 
@@ -16,9 +17,13 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   User? user;
-  ScrollController buttersPageScrollController = ScrollController();
-  ScrollController minePageScrollController = ScrollController();
-  ScrollController profilePageScrollController = ScrollController();
+  var scrollControllers = [
+    ScrollController(),
+    ScrollController(),
+    ScrollController(),
+    ScrollController(),
+    ScrollController(),
+  ];
 
   BottomNavigationBarItem generateNavBarItem(Icon icon, String label) {
     return BottomNavigationBarItem(icon: icon, label: label);
@@ -33,10 +38,12 @@ class _MainPageState extends State<MainPage> {
   }
   @override
   Widget build(BuildContext context) {
-    var scrollControllers = [
-      buttersPageScrollController,
-      minePageScrollController,
-      profilePageScrollController,
+    var items = [
+      generateNavBarItem(Icon(Icons.view_list), BUTTERS),
+      generateNavBarItem(Icon(Icons.search), SEARCH),
+      generateNavBarItem(Icon(Icons.add), NEW),
+      generateNavBarItem(Icon(Icons.star), MINE),
+      generateNavBarItem(Icon(Icons.person), PROFILE),
     ];
 
     setState(() {
@@ -46,11 +53,9 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: [
-          generateNavBarItem(Icon(Icons.view_list), BUTTERS),
-          generateNavBarItem(Icon(Icons.star), MINE),
-          generateNavBarItem(Icon(Icons.person), PROFILE),
-        ],
+        items: items,
+        selectedItemColor: MAIN_THEME_COLOR,
+        unselectedItemColor: BUTTON_GREY_COLOR,
         onTap: (int index) {
 
           // Current bottom bar works as scroller trigger to top.
@@ -67,13 +72,19 @@ class _MainPageState extends State<MainPage> {
         index: _currentIndex,
         children: [
           ButtersPage(
-            buttersPageScrollController,
+            scrollControllers[0],
           ),
           MinePage(
-            minePageScrollController,
+            scrollControllers[1],
+          ),
+          AddButterPage(
+            scrollControllers[2],
+          ),
+          MinePage(
+            scrollControllers[3],
           ),
           ProfilePage(
-            profilePageScrollController,
+            scrollControllers[4],
           ),
         ],
       ),

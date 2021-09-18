@@ -2,15 +2,15 @@ class ButterComment {
   int commentId;
   int butterId;
   int posterUserId;
-  int timestamp;
-  String content;
+  int creationTimestamp;
+  String contentText;
 
   ButterComment(
     this.commentId,
     this.butterId,
     this.posterUserId,
-    this.timestamp,
-    this.content,
+    this.creationTimestamp,
+    this.contentText,
   );
 
   static fromMap(map){
@@ -18,8 +18,8 @@ class ButterComment {
       map["commentId"],
       map["butterId"],
       map["posterUserId"],
-      map["timestamp"],
-      map["content"]
+      map["creationTimestamp"],
+      map["contentText"]
     );
   }
 }

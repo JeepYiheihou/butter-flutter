@@ -2,7 +2,7 @@ import 'package:butter/models/media_item.dart';
 
 class Butter {
   int butterId;
-  int ownerId;
+  int userId;
   String title;
   String contentText;
   String type;
@@ -10,7 +10,7 @@ class Butter {
 
   Butter(
     this.butterId,
-    this.ownerId,
+    this.userId,
     this.title,
     this.contentText,
     this.type,
@@ -25,7 +25,7 @@ class Butter {
 
     return Butter(
       map["butterId"],
-      map["ownerId"],
+      map["userId"],
       map["title"],
       map["contentText"],
       map["type"],

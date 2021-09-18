@@ -1,12 +1,11 @@
 import 'package:butter/common/global.dart';
 import 'package:butter/models/butter.dart';
 import 'package:butter/models/user.dart';
+import 'package:butter/pages/components/butter_tile_view.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:butter/utils/network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
-import 'components/butter_tile_view.dart';
 
 class ButtersPage extends StatefulWidget {
 
