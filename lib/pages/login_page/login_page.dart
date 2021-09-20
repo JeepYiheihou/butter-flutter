@@ -1,9 +1,12 @@
-import 'dart:developer';
+import 'dart:convert';
 
 import 'package:butter/common/global.dart';
 import 'package:butter/models/user.dart';
+import 'package:butter/pages/components/button_style.dart';
+import 'package:butter/pages/components/toast.dart';
 import 'package:butter/pages/main_page/main_page.dart';
 import 'package:butter/utils/constants.dart';
+import 'package:butter/utils/network.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,21 +34,50 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() {
-    log("Trying to login with user name $userName and password $password");
-    // Mock update global variable
-    Global.user = User(
-      1,
-      "bulubuluman",
-      "mail.gmail.com",
-      "Vancouver",
-      "male",
-      "1.jpeg",
-      ["goga", "happiness"],
-    );
-    Navigator.pushReplacement(
+    if (userName == "") {
+      ButterToast.showToast(
         context,
-        MaterialPageRoute(builder: (context) => MainPage())
-    );
+        "Hey what's your name?",
+      );
+      return;
+    }
+
+    if (password == "") {
+      ButterToast.showToast(
+        context,
+        "Hey I need your password (´・ω・｀)",
+      );
+      return;
+    }
+
+    String url = ButterHttpUtils.generateLoginUrl();
+    Map userNamePasswordMap = {
+      "name": userName,
+      "password": password,
+    };
+
+    ButterHttpUtils.request(
+      url,
+      method: "POST",
+      data: jsonEncode(userNamePasswordMap),
+    ).then((res) {
+      // If login succeeded, then update user data from res.
+      final data = res.data;
+      Global.user = User.fromMap(data["user"]);
+      Global.token = data["token"];
+
+      // Then navigate to main page.
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainPage())
+      );
+    }).catchError((err) {
+      ButterToast.showToast(
+        context,
+        "Ooops cannot log in. Check your user name and password?"
+      );
+      print(err.toString());
+    });
   }
 
   @override
@@ -131,13 +163,7 @@ class LoginButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         child: Text("Login"),
-        style: ElevatedButton.styleFrom(
-          onPrimary: Colors.white,
-          textStyle: TextStyle(
-            fontSize: 20,
-            fontFamily: MAIN_FONT_FAMILY,
-          )
-        ),
+        style: ButterButtonStyle.mainThemeButtonStyle(),
         onPressed: () {
           login();
         },

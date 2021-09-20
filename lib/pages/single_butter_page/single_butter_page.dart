@@ -3,6 +3,7 @@ import 'package:butter/models/comment.dart';
 import 'package:butter/models/media_item.dart';
 import 'package:butter/models/user.dart';
 import 'package:butter/pages/comment_page/comment_page.dart';
+import 'package:butter/pages/components/button_style.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:butter/utils/network.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -35,18 +36,7 @@ class _SingleButterPageState extends State<SingleButterPage> {
 
   _SingleButterPageState(this.butter, this.user);
 
-  @override
-  void initState() {
-    super.initState();
-
-    // Initiate owner data
-    String butterOwnerUrl = ButterHttpUtils.generateUserUrl(butter.userId.toString());
-    ButterHttpUtils.request(butterOwnerUrl).then((res) {
-      setState(() {
-        butterOwner = User.fromMap(res.data);
-      });
-    });
-
+  void updateComments() {
     // Initiate comments data
     String commentsUrl = ButterHttpUtils.generateCommentsByButterIdUrl(butter.butterId.toString());
     ButterHttpUtils.request(commentsUrl).then((res) {
@@ -54,11 +44,27 @@ class _SingleButterPageState extends State<SingleButterPage> {
       for (var comment in res.data) {
         newComments.add(ButterComment.fromMap(comment));
       }
-
       setState(() {
         comments = newComments;
       });
     });
+  }
+
+  void updateButterOwner() {
+    String butterOwnerUrl = ButterHttpUtils.generateUserUrl(butter.userId.toString());
+    ButterHttpUtils.request(butterOwnerUrl).then((res) {
+      setState(() {
+        butterOwner = User.fromMap(res.data);
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Initiate owner data
+    updateButterOwner();
+    updateComments();
   }
 
   @override
@@ -77,7 +83,7 @@ class _SingleButterPageState extends State<SingleButterPage> {
 
     // If this butter belongs to myself, then don't display the
     // butter button.
-    List<Widget> buttonsList = [SingleButterViewButtonsSet()];
+    List<Widget> buttonsList = [SingleButterViewButtonsSet(butter, updateComments)];
     if (user != null && user!.userId == butter.userId) {
       buttonsList.add(Divider());
     } else {
@@ -93,13 +99,7 @@ class _SingleButterPageState extends State<SingleButterPage> {
                 Text("MAKE A BUTTER"),
               ],
             ),
-            style: ElevatedButton.styleFrom(
-                elevation: 0,
-                onPrimary: Colors.white,
-                textStyle: TextStyle(
-                  fontFamily: MAIN_FONT_FAMILY,
-                )
-            ),
+            style: ButterButtonStyle.mainThemeButtonStyle(),
             onPressed: () {},
           ),
         )
@@ -186,8 +186,8 @@ class UserNameWithBigAvatar extends StatelessWidget {
       String url = ButterHttpUtils.generateAvatarUrl(user!.avatarUrl);
       rowContents = [
         ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: Image.network(url, height: 30, width: 30),
+          borderRadius: BorderRadius.circular(25),
+          child: Image.network(url, height: 50, width: 50),
         ),
         SizedBox(width: 10),
         Text(user!.name),
@@ -200,7 +200,16 @@ class UserNameWithBigAvatar extends StatelessWidget {
   }
 }
 
+// The small buttons under the large single butter gallery:
+// comment and like buttons
 class SingleButterViewButtonsSet extends StatelessWidget {
+
+  final Butter butter;
+  final updateRender;
+  SingleButterViewButtonsSet(
+    this.butter,
+    this.updateRender,
+  );
 
   IconButton getLittleButton(icon, onPressed) {
     return IconButton(
@@ -221,8 +230,8 @@ class SingleButterViewButtonsSet extends StatelessWidget {
           SizedBox(width: 10),
           getLittleButton(Icon(Icons.chat), () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return CommentPage();
-            }));
+              return CommentPage(butter);
+            })).then((value) { updateRender(); });
           }),
           SizedBox(width: 10),
           getLittleButton(Icon(Icons.favorite), (){}),
@@ -253,6 +262,8 @@ class CommentsView extends StatelessWidget {
   }
 }
 
+// View of each single comment unit,
+// With commenter's avatar, name and comment text.
 class CommentUnitView extends StatefulWidget {
   final ButterComment comment;
   CommentUnitView(this.comment);
@@ -280,7 +291,7 @@ class _CommentUnitViewState extends State<CommentUnitView> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime dt = DateTime.fromMicrosecondsSinceEpoch(comment.creationTimestamp);
+    DateTime dt = DateTime.fromMillisecondsSinceEpoch(comment.creationTimestamp * 1000);
     var commentTime = DateFormat("yyyy-MM-dd - kk:mm").format(dt);
     String avatarUrl = ButterHttpUtils.generateAvatarByUserIdUrl(comment.posterUserId.toString());
 
@@ -291,16 +302,14 @@ class _CommentUnitViewState extends State<CommentUnitView> {
         ClipRRect(
           child: Image.network(
             avatarUrl,
-            width: 20,
-            height: 20,
+            width: 30,
+            height: 30,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
         ),
       );
       commentTitle = user!.name + ": " + commentTime;
     }
-
-
     rowChildren.add(SizedBox(width: 10));
     rowChildren.add(
       Column(
@@ -313,7 +322,7 @@ class _CommentUnitViewState extends State<CommentUnitView> {
             ),
           ),
           Text(comment.contentText),
-          SizedBox(height: 5),
+          SizedBox(height: 10),
         ],
       ),
     );

@@ -5,7 +5,6 @@ class User {
   String address;
   String gender;
   String avatarUrl;
-  List<String> wishList;
 
   User(
     this.userId,
@@ -14,16 +13,9 @@ class User {
     this.address,
     this.gender,
     this.avatarUrl,
-    this.wishList,
   );
 
   static fromMap(map) {
-    List<String> wishList = [];
-    if (map["wishList"] != null) {
-      for (var wish in map["wishList"]) {
-        wishList.add(wish);
-      }
-    }
 
     return User(
       map["userId"],
@@ -32,7 +24,6 @@ class User {
       map["address"],
       map["gender"],
       map["avatarUrl"],
-      wishList
     );
   }
 }

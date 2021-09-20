@@ -1,5 +1,5 @@
 class ButterComment {
-  int commentId;
+  int? commentId;
   int butterId;
   int posterUserId;
   int creationTimestamp;

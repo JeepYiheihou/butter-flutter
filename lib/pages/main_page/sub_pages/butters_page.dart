@@ -4,6 +4,7 @@ import 'package:butter/models/user.dart';
 import 'package:butter/pages/components/butter_tile_view.dart';
 import 'package:butter/utils/constants.dart';
 import 'package:butter/utils/network.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -34,7 +35,10 @@ class _ButtersPageState extends State<ButtersPage> {
   void initState() {
     super.initState();
     String url = ButterHttpUtils.generateButtersByAllUrl("");
-    ButterHttpUtils.request(url).then((res) {
+    ButterHttpUtils.request(
+      url,
+      headers: ButterHttpUtils.getJwtHeader(),
+    ).then((res) {
       final data = res.data;
       List<Butter> buttersUpdated = [];
       for (var map in data) {
